@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://mutelion.com">
-  <title>Springboot 整合MybatisPlus | lionBlog</title>
+  <title>article | lionBlog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="参考资料 官方文档：https:&#x2F;&#x2F;mp.baomidou.com&#x2F;guide&#x2F;config.html 参考博客：http:&#x2F;&#x2F;www.ityouknow.com&#x2F;springboot&#x2F;2019&#x2F;05&#x2F;14&#x2F;spring-boot-mybatis-plus.html  导入项目所需依赖12345&amp;lt;dependency&amp;gt;          &amp;lt;groupId&amp;gt;com.baomi">
+  <meta name="description" content="参考资料 官方文档：https:&#x2F;&#x2F;mp.baomidou.com&#x2F;guide&#x2F;config.html 参考博客：http:&#x2F;&#x2F;www.ityouknow.com&#x2F;springboot&#x2F;2019&#x2F;05&#x2F;14&#x2F;spring-boot-mybatis-plus.html  导入MongoDB依赖1234&amp;lt;dependency&amp;gt;          &amp;lt;groupId&amp;gt;org.spr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Springboot 整合MybatisPlus">
-<meta property="og:url" content="http:&#x2F;&#x2F;mutelion.com&#x2F;2019&#x2F;12&#x2F;04&#x2F;Springboot-%E6%95%B4%E5%90%88MybatisPlus&#x2F;index.html">
+<meta property="og:title" content="article">
+<meta property="og:url" content="http:&#x2F;&#x2F;mutelion.com&#x2F;2019&#x2F;12&#x2F;30&#x2F;article&#x2F;index.html">
 <meta property="og:site_name" content="lionBlog">
-<meta property="og:description" content="参考资料 官方文档：https:&#x2F;&#x2F;mp.baomidou.com&#x2F;guide&#x2F;config.html 参考博客：http:&#x2F;&#x2F;www.ityouknow.com&#x2F;springboot&#x2F;2019&#x2F;05&#x2F;14&#x2F;spring-boot-mybatis-plus.html  导入项目所需依赖12345&amp;lt;dependency&amp;gt;          &amp;lt;groupId&amp;gt;com.baomi">
+<meta property="og:description" content="参考资料 官方文档：https:&#x2F;&#x2F;mp.baomidou.com&#x2F;guide&#x2F;config.html 参考博客：http:&#x2F;&#x2F;www.ityouknow.com&#x2F;springboot&#x2F;2019&#x2F;05&#x2F;14&#x2F;spring-boot-mybatis-plus.html  导入MongoDB依赖1234&amp;lt;dependency&amp;gt;          &amp;lt;groupId&amp;gt;org.spr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-04T12:31:55.806Z">
+<meta property="og:updated_time" content="2019-12-30T09:14:08.120Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="lionBlog" type="application/atom+xml">
@@ -156,20 +156,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Springboot-整合MybatisPlus" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-article" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Springboot 整合MybatisPlus
+      article
     </h1>
   
 
         
-        <a href="/2019/12/04/Springboot-%E6%95%B4%E5%90%88MybatisPlus/" class="archive-article-date">
-  	<time datetime="2019-12-04T11:52:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-04</time>
+        <a href="/2019/12/30/article/" class="archive-article-date">
+  	<time datetime="2019-12-30T09:02:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-30</time>
 </a>
         
       </header>
@@ -180,11 +180,12 @@
 <li>官方文档：<code>https://mp.baomidou.com/guide/config.html</code></li>
 <li>参考博客：<code>http://www.ityouknow.com/springboot/2019/05/14/spring-boot-mybatis-plus.html</code></li>
 </ol>
-<h3 id="导入项目所需依赖"><a href="#导入项目所需依赖" class="headerlink" title="导入项目所需依赖"></a>导入项目所需依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">          &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">          &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;</span><br><span class="line">          &lt;version&gt;3.2.0&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="导入MongoDB依赖"><a href="#导入MongoDB依赖" class="headerlink" title="导入MongoDB依赖"></a>导入MongoDB依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">          &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">          &lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;/artifactId&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="在application-yml文件中添加"><a href="#在application-yml文件中添加" class="headerlink" title="在application.yml文件中添加"></a>在application.yml文件中添加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus:</span><br><span class="line">  mapper-locations: classpath:mapping/*.xml</span><br><span class="line">  type-aliases-package: com.XXX.mapper</span><br></pre></td></tr></table></figure>
+<h3 id="在application-yml文件中添加"><a href="#在application-yml文件中添加" class="headerlink" title="在application.yml文件中添加"></a>在application.yml文件中添加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data:</span><br><span class="line">    mongodb:</span><br><span class="line">      uri: mongodb://localhost:27017/sys_demo</span><br></pre></td></tr></table></figure>
 
-<h3 id="在Springboot项目启动类上添加注解-MapperScan-“com-XXX-mapper”"><a href="#在Springboot项目启动类上添加注解-MapperScan-“com-XXX-mapper”" class="headerlink" title="在Springboot项目启动类上添加注解@MapperScan(“com.XXX.mapper”)"></a>在Springboot项目启动类上添加注解@MapperScan(“com.XXX.mapper”)</h3>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">   private MongoTemplate mongoTemplate;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">   public long updateUserInfo(MongoUserInfo mongoUserInfo) &#123;</span><br><span class="line"></span><br><span class="line">       //Query query = new Query();   用来封装所有条件的对象</span><br><span class="line">       //Criteria criteria = new Criteria(); 用来构建条件</span><br><span class="line"></span><br><span class="line">       Query query = new Query(Criteria.where(&quot;id&quot;).is(mongoUserInfo.getId()));</span><br><span class="line"></span><br><span class="line">       Update update = new Update().set(&quot;userName&quot;,mongoUserInfo.getUsername()).set(&quot;password&quot;,mongoUserInfo.getPassword());</span><br><span class="line"></span><br><span class="line">       //更新查询返回结果集的第一条</span><br><span class="line">       UpdateResult result = mongoTemplate.updateFirst(query,update,UserInfo.class);</span><br><span class="line"></span><br><span class="line">       //更新查询返回结果集的所有</span><br><span class="line">       //mongoTemplate.updateMulti(query,update,UserEntity.class);</span><br><span class="line">       if (result != null)</span><br><span class="line">           return result.getMatchedCount();</span><br><span class="line">       else</span><br><span class="line">           return 0;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -263,7 +264,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://mutelion.com/2019/12/04/Springboot-%E6%95%B4%E5%90%88MybatisPlus/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://mutelion.com/2019/12/30/article/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -277,18 +278,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/30/article/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          article
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/11/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">SSO单点登陆</div>
+    <a href="/2019/12/04/Springboot-%E6%95%B4%E5%90%88MybatisPlus/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Springboot 整合MybatisPlus</div>
       <i class="icon-circle-right"></i>
     </a>
   
