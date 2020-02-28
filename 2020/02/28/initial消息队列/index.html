@@ -6,16 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://mutelion.com">
-  <title>lionBlog</title>
+  <title>initial消息队列 | lionBlog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="做自己想做的事">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lionBlog">
-<meta property="og:url" content="http:&#x2F;&#x2F;mutelion.com&#x2F;index.html">
+  <meta name="description" content="参考资料 https:&#x2F;&#x2F;github.com&#x2F;doocs&#x2F;advanced-java&#x2F;blob&#x2F;master&#x2F;docs&#x2F;high-concurrency&#x2F;why-mq.md">
+<meta property="og:type" content="article">
+<meta property="og:title" content="initial消息队列">
+<meta property="og:url" content="http:&#x2F;&#x2F;mutelion.com&#x2F;2020&#x2F;02&#x2F;28&#x2F;initial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97&#x2F;index.html">
 <meta property="og:site_name" content="lionBlog">
-<meta property="og:description" content="做自己想做的事">
+<meta property="og:description" content="参考资料 https:&#x2F;&#x2F;github.com&#x2F;doocs&#x2F;advanced-java&#x2F;blob&#x2F;master&#x2F;docs&#x2F;high-concurrency&#x2F;why-mq.md">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="d:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Ccg1.png">
+<meta property="og:image" content="d:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Cmq1.png">
+<meta property="og:image" content="d:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Ccg2.png">
+<meta property="og:image" content="d:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Cmq2.png">
+<meta property="og:image" content="d:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Ccg3.png">
+<meta property="og:image" content="d:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Cmq3.png">
+<meta property="og:updated_time" content="2020-02-28T07:23:02.106Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Ccg1.png">
   
     <link rel="alternative" href="/atom.xml" title="lionBlog" type="application/atom+xml">
   
@@ -155,16 +163,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-initial消息队列" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-initial消息队列" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/28/initial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">initial消息队列</a>
+    <h1 class="article-title" itemprop="name">
+      initial消息队列
     </h1>
   
 
@@ -180,9 +186,75 @@
         <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
 <li><a href="https://github.com/doocs/advanced-java/blob/master/docs/high-concurrency/why-mq.md" target="_blank" rel="noopener">https://github.com/doocs/advanced-java/blob/master/docs/high-concurrency/why-mq.md</a></li>
 </ol>
-        
+<a id="more"></a>
+
+<h3 id="消息队列的使用场景"><a href="#消息队列的使用场景" class="headerlink" title="消息队列的使用场景"></a>消息队列的使用场景</h3><p><strong>解耦</strong></p>
+<ul>
+<li><p>A系统发送数据到BCD三个系统，通过接口调用发送。如果E系统也要这个数据呢？那如果C系统现在不需要了呢？A系统负责人几乎崩溃<br><img src="D:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Ccg1.png" alt="1"></p>
+</li>
+<li><p>在这个场景中，A系统跟其他其他各种各种乱七八糟的系统严重耦合，A系统产生一条比较关键的数据，很多系统都需要A系统将这条数据发送过来。A系统要时时刻刻考虑到BCDE四个系统如果挂了咋办？要不要重发，要不要把消息存起来？头发都白了啊！！！</p>
+</li>
+<li><p>如果使用MQ，A系统产生一条数据，发送到MQ里面去，哪个系统需要数据自己去MQ里面消费。如果新系统需要数据，直接从MQ里消费即可；如果哪个系统不需要这条数据了，就取消对MQ消息的消费即可。这样下来，A系统压根不需要去考虑要给谁发送数据，不需要维护这个代码，也不需要考虑人间是否调用成功、失败超时等情况。<br><img src="D:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Cmq1.png" alt="1"></p>
+</li>
+</ul>
+<p><strong>总结</strong> 通过一个MQ，Pub/Sub发布订阅消息这么一个模型，A系统就跟其他系统彻底解耦了。</p>
+<p><strong>异步</strong></p>
+<ul>
+<li><p>再来看一个场景，A系统接收一个请求，需要在自己本地写库，还需要在BCD三个系统写库，自己本地写库要3ms，BCD三个系统分别写库需要300ms,450ms,200ms。最终请求总延时是3+300+450+200=953ms，接近1ms，用户感觉搞什么东西，慢死了慢死了。用户通过浏览器发起请求，等待1s，这几乎是不可接受的。<br><img src="D:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Ccg2.png" alt="1"></p>
+</li>
+<li><p>一般互联网类的企业，对应用户直接的操作，一般要求是美国请求都必须在200ms以内完成，对于用户几乎是无感的。</p>
+</li>
+<li><p>如果使用MQ，那么A系统连续发送3条消息到MQ队列中，假如耗时5ms，A系统从接受一个请求到返回响应给客户，总时长是3+5=8ms，对于用户而言，其实感觉上就是点个按钮，8ms以后就直接返回了，爽！网站做得真好，真快<br><img src="D:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Cmq2.png" alt="1"></p>
+</li>
+</ul>
+<p><strong>削峰</strong></p>
+<ul>
+<li><p>每天0:00到12:00，A系统风平浪静，每秒并发请求数量就50个。结果每次一到12:00-13:00，每秒并发请求数量突然会暴增到5k+条。但是系统是直接基于MYSQL的，大量的请求涌入MYSQL，每秒钟对MYSQL执行约5k条SQL。</p>
+</li>
+<li><p>一般的MYSQL，扛到每秒2k个请求就差不多了，如果每秒请求到5k的话，可能就直接把MYSQL给打死了，导致系统崩溃，用户也就没法再使用系统了。</p>
+</li>
+<li><p>但是高峰期一过，到了下午的时候，就成了低峰期，可能也就1w的用户同时在网站上操作，每秒钟的请求数量也就50个请求，对整个系统几乎没有任何的压力。<br><img src="D:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Ccg3.png" alt="1"></p>
+</li>
+<li><p>如果使用MQ，每秒5k个请求写入MQ，A系统每秒钟最多处理2k个请求，因为MYSQL每秒钟最多处理2k个。A系统从MQ中慢慢拉取请求，每秒钟就拉取2k个请求，不要超过自己每秒能处理的的最大请求数量就ok,这样下来，哪怕是高峰期的时候，A系统也绝对不会挂掉。而MQ每秒钟5k个请求进来，就2k个请求出去，结果就导致在中午高峰期（1个小时），可能有几十万甚至几百万的请求积压在MQ中。<br><img src="D:%5CBlog%5Csource_posts%5Cinitial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%5Cmq3.png" alt="1"></p>
+</li>
+<li><p>这个短暂的高峰期积压是ok的，因为高峰期过了之后，每秒钟就50个请求进MQ,但是A系统依然会按照每秒2k个请求的速度在处理。所以说，只要高峰期一过，A系统就会快速将积压的消息解决掉。</p>
+</li>
+</ul>
+<p><strong>消息队列的缺点</strong></p>
+<ul>
+<li><p>系统可用性降低</p>
+<p style="text-indent:1em">系统引入的外部依赖越多，越容易挂掉。万一MQ挂了咋整？MQ一挂，整套系统崩溃。</p>
+</li>
+<li><p>系统复杂度提高</p>
+<p style="text-indent:1em">硬生生加个MQ进来，怎么保证消息没有重复消费？怎么处理消息丢失的情况？怎么保证消息传输的顺序性</p>
+</li>
+<li><p>一致性问题</p>
+<p style="text-indent:1em">A系统处理完了直接返回成功了，人都以为你这个请求成功了；但是问题是，要是BCD三个系统哪里，BD两个系统写库成功了，结果C系统写库失败了，咋整？数据就不一致了</p></li>
+</ul>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -191,16 +263,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/28/initial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://mutelion.com/2020/02/28/initial%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/02/28/Springboot%E9%9B%86%E6%88%90Rabbitmq-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">初识消息队列</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -220,334 +351,14 @@
 
 
 
-
   
-    <article id="post-Springboot集成Rabbitmq-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/28/Springboot%E9%9B%86%E6%88%90Rabbitmq-1/">初识消息队列</a>
-    </h1>
   
 
-        
-        <a href="/2020/02/28/Springboot%E9%9B%86%E6%88%90Rabbitmq-1/" class="archive-article-date">
-  	<time datetime="2020-02-28T01:16:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://github.com/doocs/advanced-java/blob/master/docs/high-concurrency/why-mq.md" target="_blank" rel="noopener">https://github.com/doocs/advanced-java/blob/master/docs/high-concurrency/why-mq.md</a></li>
-</ol>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/28/Springboot%E9%9B%86%E6%88%90Rabbitmq-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-将本地项目上传到码云" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/12/%E5%B0%86%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0%E7%A0%81%E4%BA%91/">将本地项目上传到码云</a>
-    </h1>
   
 
-        
-        <a href="/2020/02/12/%E5%B0%86%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0%E7%A0%81%E4%BA%91/" class="archive-article-date">
-  	<time datetime="2020-02-12T08:26:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li>简书： <code>https://www.jianshu.com/p/3e0b213ab03d</code></li>
-<li>git常用的命令： <code>https://www.cnblogs.com/convict/p/10795320.html</code></li>
-</ol>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/12/%E5%B0%86%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0%E7%A0%81%E4%BA%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MyBatisPlus条件构造器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/16/MyBatisPlus%E6%9D%A1%E4%BB%B6%E6%9E%84%E9%80%A0%E5%99%A8/">MyBatisPlus条件构造器</a>
-    </h1>
   
 
-        
-        <a href="/2020/01/16/MyBatisPlus%E6%9D%A1%E4%BB%B6%E6%9E%84%E9%80%A0%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-01-16T03:43:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>官方文档 <code>https://mp.baomidou.com/guide/wrapper.html</code></li>
-<li>参考博客 <code>https://blog.csdn.net/m0_37034294/article/details/82917234</code>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/16/MyBatisPlus%E6%9D%A1%E4%BB%B6%E6%9E%84%E9%80%A0%E5%99%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-article" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/30/article/">springboot基成MongoDB</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/30/article/" class="archive-article-date">
-  	<time datetime="2019-12-30T09:02:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>官方文档：<code>https://mp.baomidou.com/guide/config.html</code></li>
-<li>参考博客：<code>http://www.ityouknow.com/springboot/2019/05/14/spring-boot-mybatis-plus.html</code>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/30/article/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Springboot-整合MybatisPlus" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/04/Springboot-%E6%95%B4%E5%90%88MybatisPlus/">Springboot 整合MybatisPlus</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/04/Springboot-%E6%95%B4%E5%90%88MybatisPlus/" class="archive-article-date">
-  	<time datetime="2019-12-04T11:52:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>官方文档：<code>https://mp.baomidou.com/guide/config.html</code></li>
-<li>参考博客：<code>http://www.ityouknow.com/springboot/2019/05/14/spring-boot-mybatis-plus.html</code>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/04/Springboot-%E6%95%B4%E5%90%88MybatisPlus/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -570,8 +381,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
